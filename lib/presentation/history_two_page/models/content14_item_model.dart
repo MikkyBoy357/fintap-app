@@ -1,0 +1,1 @@
+class Content14ItemModel { }

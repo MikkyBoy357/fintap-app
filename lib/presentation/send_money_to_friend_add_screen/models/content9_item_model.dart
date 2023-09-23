@@ -1,0 +1,1 @@
+class Content9ItemModel { }

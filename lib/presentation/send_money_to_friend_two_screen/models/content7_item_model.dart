@@ -1,0 +1,1 @@
+class Content7ItemModel { }

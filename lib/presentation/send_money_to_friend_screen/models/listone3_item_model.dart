@@ -1,0 +1,1 @@
+class Listone3ItemModel { }
