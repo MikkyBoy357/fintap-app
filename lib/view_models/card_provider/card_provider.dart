@@ -11,6 +11,13 @@ class CardProvider extends ChangeNotifier {
   Channels cardSwitches =
       Channels(atm: false, pos: false, web: true, mobile: true);
 
+  TextEditingController addressLine1Controller = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController stateController = TextEditingController();
+  TextEditingController countryController = TextEditingController();
+  TextEditingController postCodeController = TextEditingController();
+  TextEditingController cardBrandController = TextEditingController();
+
   Future<void> getCards() async {
     await Future.delayed(Duration.zero);
     // token = await getAccessToken() as String;
@@ -100,5 +107,43 @@ class CardProvider extends ChangeNotifier {
     print(cardSwitches.toJson());
     notifyListeners();
     putCardControls(card);
+  }
+
+  Future<void> requestCard() async {
+    await Future.delayed(Duration.zero);
+    // token = await getAccessToken() as String;
+    print("Token => ${token}");
+    try {
+      print("Putting Card Controls...");
+      Dio dio = Dio();
+      var url = "${baseUrl}/cards";
+      var body = {
+        "line1": addressLine1Controller.text,
+        "city": cityController.text,
+        "state": stateController.text,
+        "country": countryController.text,
+        "postalCode": postCodeController.text,
+        "card_brand": "Verve",
+        "card_type": "physical"
+      };
+      var response = await dio.post(
+        url,
+        data: cardSwitches.toJson(),
+        options: Options(
+          headers: {
+            'accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      print(response);
+      print(response.data.toString());
+
+      print("Cards Put Successfully...");
+      notifyListeners();
+    } on DioError catch (e) {
+      print("Error Putting Card Controls...");
+    }
   }
 }

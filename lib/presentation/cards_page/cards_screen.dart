@@ -67,16 +67,24 @@ class _CardsScreenState extends State<CardsScreen> {
                       //   },
                       // );
                     },
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Text("New Card"),
-                      ),
+                    child: Builder(
+                      builder: (context) {
+                        if (!cardProvider.cards.isNotEmpty) {
+                          return SizedBox();
+                        } else {
+                          return Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: Text("New Card"),
+                            ),
+                          );
+                        }
+                      },
                     ),
                   ),
                 ],

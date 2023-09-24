@@ -1,5 +1,6 @@
 import 'package:fintap/core/app_export.dart';
 import 'package:fintap/core/utils/validation_functions.dart';
+import 'package:fintap/presentation/send_money_to_bank_screen/models/bank_accounts_model.dart';
 import 'package:fintap/widgets/app_bar/appbar_image.dart';
 import 'package:fintap/widgets/app_bar/appbar_subtitle.dart';
 import 'package:fintap/widgets/app_bar/custom_app_bar.dart';
@@ -409,10 +410,21 @@ class SendMoneyToBankScreen extends GetWidget<SendMoneyToBankController> {
                       margin: getMargin(
                         bottom: 16,
                       ),
-                      onTap: () {
-                        controller.addAccountService();
+                      onTap: () async {
+                        await controller.addAccountService();
+
+                        final accountNumber =
+                            controller.accountNumberController.text;
+                        final BankAccountData accountData = controller
+                            .bankAccountModel.value.data!
+                            .where((element) =>
+                                element.accountNumber == accountNumber)
+                            .first;
+                        print(accountNumber);
+                        // Get.back();
+                        Get.toNamed(AppRoutes.sendMoneyToBankOneScreen,
+                            arguments: accountData);
                         controller.clearAddAccountControllers();
-                        Get.back();
                       },
                     )
                   : CustomButton(

@@ -231,7 +231,7 @@ class SendMoneyToBankThreeScreen
                                                   top: 3,
                                                 ),
                                                 child: Text(
-                                                  "${data.extra!.beneficiaryDetails!.accountName}",
+                                                  "${moneyFormat().format(double.parse("${data.amount}"))}",
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   textAlign: TextAlign.start,
